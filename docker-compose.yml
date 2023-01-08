@@ -10,7 +10,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
 
-  app:
+  microservizi_prenotazione:
     image: pievit/microservizi_prenotazione
     build:
       context: .
