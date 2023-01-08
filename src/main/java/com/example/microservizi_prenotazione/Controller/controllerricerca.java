@@ -1,5 +1,6 @@
 package com.example.microservizi_prenotazione.Controller;
 
+import com.example.microservizi_prenotazione.Entities.emailDetails;
 import com.example.microservizi_prenotazione.Entities.prenotazione;
 import com.example.microservizi_prenotazione.Entities.prenotazioneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +47,12 @@ public class controllerricerca {
     public String addPrenotazione(@RequestBody prenotazione pre){
          try{
              Prerepository.save(pre);
+             emailDetails ed = new emailDetails(pre.getTassista(),"Hai una nuova prenotazione","Prenotazione aggiunta","");
              ControllerEmail ce = new ControllerEmail();
-             ce.sendSimpleMessage(pre.getTassista(),"Prenotazione aggiunta","Hai una nuova prenotazione.");
+             ce.sendSimpleMessage(ed,"mailgratis60@gmail.com");
              return "Prenotazione inserita.";
          }catch(Exception e){
+//             System.out.println(e);
              return e.getMessage();
          }
      }
@@ -149,8 +152,11 @@ public class controllerricerca {
         try{
             pre.setStato("attesa_conferma");
             Prerepository.save(pre);
+            emailDetails ed = new emailDetails(pre.getCliente(),"Hai una nuova prenotazione da confermare","Prenotazione in attesa di conferma","");
             ControllerEmail ce = new ControllerEmail();
-            ce.sendSimpleMessage(pre.getCliente(),"Prenotazione in attesa di conferma","Hai una nuova prenotazione da confermare.");
+            ce.sendSimpleMessage(ed,"mailgratis60@gmail.com");
+//            ControllerEmail ce = new ControllerEmail();
+//            ce.sendSimpleMessage(pre.getCliente(),"Prenotazione in attesa di conferma","Hai una nuova prenotazione da confermare.");
             return "Prenotazione in attesa di conferma.";
         }catch(Exception e){
             return e.getMessage();
@@ -164,9 +170,15 @@ public class controllerricerca {
         try{
             pre.setStato("annullata");
             Prerepository.save(pre);
+            emailDetails ed = new emailDetails(pre.getTassista(),"La prenotazione "+pre.getId()+" del cliente: "+pre.getCliente()+" è stata annullata.","Prenotazione annullata","");
             ControllerEmail ce = new ControllerEmail();
-            ce.sendSimpleMessage(pre.getTassista(),"Prenotazione annullata","La prenotazione "+pre.getId()+" del cliente: "+pre.getCliente()+" è stata annullata.");
-            ce.sendSimpleMessage(pre.getCliente(),"Prenotazione annullata","La prenotazione "+pre.getId()+" col tassista: "+pre.getTassista()+" è stata annullata.");
+            ce.sendSimpleMessage(ed,"mailgratis60@gmail.com");
+            emailDetails ed1 = new emailDetails(pre.getCliente(),"La prenotazione "+pre.getId()+" col tassista: "+pre.getCliente()+" è stata annullata.","Prenotazione annullata","");
+            ControllerEmail ce1 = new ControllerEmail();
+            ce1.sendSimpleMessage(ed1,"mailgratis60@gmail.com");
+//            ControllerEmail ce = new ControllerEmail();
+//            ce.sendSimpleMessage(pre.getTassista(),"Prenotazione annullata","La prenotazione "+pre.getId()+" del cliente: "+pre.getCliente()+" è stata annullata.");
+//            ce.sendSimpleMessage(pre.getCliente(),"Prenotazione annullata","La prenotazione "+pre.getId()+" col tassista: "+pre.getTassista()+" è stata annullata.");
             return "Prenotazione annullata con successo.";
         }catch(Exception e){
             return e.getMessage();
@@ -184,9 +196,15 @@ public class controllerricerca {
             pre.setCodice(codice);
             pre.setStato("confermata");
             Prerepository.save(pre);
+            emailDetails ed = new emailDetails(pre.getTassista(),"La prenotazione "+pre.getId()+" del cliente: "+pre.getCliente()+" è stata confermata.","Prenotazione confermata","");
             ControllerEmail ce = new ControllerEmail();
-            ce.sendSimpleMessage(pre.getTassista(),"Prenotazione confermata","La prenotazione "+pre.getId()+" del cliente: "+pre.getCliente()+" è stata confermata.");
-            ce.sendSimpleMessage(pre.getCliente(),"Prenotazione confermata","La prenotazione "+pre.getId()+" col tassista: "+pre.getTassista()+" è stata confermata.");
+            ce.sendSimpleMessage(ed,"mailgratis60@gmail.com");
+            emailDetails ed1 = new emailDetails(pre.getCliente(),"La prenotazione "+pre.getId()+" col tassista: "+pre.getCliente()+" è stata confermata.","Prenotazione confermata","");
+            ControllerEmail ce1 = new ControllerEmail();
+            ce1.sendSimpleMessage(ed1,"mailgratis60@gmail.com");
+//            ControllerEmail ce = new ControllerEmail();
+//            ce.sendSimpleMessage(pre.getTassista(),"Prenotazione confermata","La prenotazione "+pre.getId()+" del cliente: "+pre.getCliente()+" è stata confermata.");
+//            ce.sendSimpleMessage(pre.getCliente(),"Prenotazione confermata","La prenotazione "+pre.getId()+" col tassista: "+pre.getTassista()+" è stata confermata.");
             return "Prenotazione confermata.";
         }catch(Exception e){
             return e.getMessage();
