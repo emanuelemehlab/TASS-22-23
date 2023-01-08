@@ -3,6 +3,7 @@ version: '1'
 services:
   db-prenotazione:
     image: postgres:alpine
+    container_name: db-prenotazione
     ports:
       - "5432:5432"
     environment:
@@ -14,7 +15,7 @@ services:
     image: pievit/microservizi_prenotazione
     build:
       context: .
-    container_name: app
+    container_name: microservizi_prenotazione
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db-prenotazione:5432/dbRicerca
       - SPRING_DATASOURCE_USERNAME=postgres
