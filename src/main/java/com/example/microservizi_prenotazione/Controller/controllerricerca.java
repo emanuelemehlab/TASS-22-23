@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import java.nio.charset.Charset;
 import java.util.*;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 public class controllerricerca {
